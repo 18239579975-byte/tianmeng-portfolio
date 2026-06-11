@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>田梦 Tian Meng — Artist Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+/* ===== DESIGN SYSTEM ===== */
+:root{--ink:#0D0C0A;--paper:#F7F4EF;--sienna:#9B6B3A;--sienna-light:#C49A68;--mist:#E8E3DA;--smoke:#6B6560;--cream:#F2EDE6;--font-zh:'Noto Serif SC',serif;--font-en:'Cormorant Garamond','Times New Roman',serif;--font-mono:'DM Mono','Courier New',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-zh);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(155,107,58,.18);color:var(--ink)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--mist)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .9s ease,transform .9s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* NAV */
+.nav-portfolio{position:fixed;top:0;left:0;right:0;z-index:100;padding:28px 60px;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:multiply}
+.nav-logo{font-family:var(--font-en);font-size:15px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--smoke);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--sienna)}
+
+/* HERO */
+.hero-section{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:140px 60px 80px;position:relative;z-index:2}
+.hero-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--sienna);margin-bottom:32px;opacity:0;animation:fadeUp .8s ease forwards .2s}
+.hero-name-zh{font-family:var(--font-zh);font-size:clamp(72px,8vw,112px);font-weight:300;line-height:.9;letter-spacing:.08em;color:var(--ink);margin-bottom:8px;opacity:0;animation:fadeUp .9s ease forwards .4s}
+.hero-name-en{font-family:var(--font-en);font-size:clamp(36px,4vw,56px);font-weight:300;font-style:italic;color:var(--smoke);letter-spacing:.04em;margin-bottom:48px;opacity:0;animation:fadeUp .9s ease forwards .55s}
+.hero-discipline{display:flex;flex-direction:column;gap:6px;margin-bottom:52px;opacity:0;animation:fadeUp .8s ease forwards .7s}
+.hero-discipline span{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--smoke);text-transform:uppercase}
+.hero-discipline span::before{content:'—  ';color:var(--sienna)}
+.hero-meta{display:flex;gap:40px;padding-top:40px;border-top:1px solid var(--mist);opacity:0;animation:fadeUp .8s ease forwards .85s}
+.hero-meta-item label{display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--sienna);margin-bottom:6px}
+.hero-meta-item p{font-family:var(--font-zh);font-size:12px;color:var(--smoke);line-height:1.6}
+.hero-right{position:relative;background:var(--mist);overflow:hidden;opacity:0;animation:fadeIn 1.2s ease forwards .6s}
+.hero-right img{width:100%;height:100%;object-fit:cover}
+
+/* SECTION */
+.section-portfolio{padding:120px 60px}
+.section-header{display:flex;align-items:baseline;gap:24px;margin-bottom:80px}
+.section-number{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--sienna)}
+.section-title-zh{font-family:var(--font-zh);font-size:11px;letter-spacing:.3em;color:var(--smoke)}
+.section-title-en{font-family:var(--font-en);font-size:clamp(32px,4vw,52px);font-weight:300;font-style:italic;color:var(--ink);letter-spacing:.02em;display:block;margin-top:8px}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:100px;align-items:start}
+.about-left{position:sticky;top:120px}
+.about-portrait{width:100%;aspect-ratio:3/4;background:var(--mist);overflow:hidden;margin-bottom:24px}
+.about-portrait img{width:100%;height:100%;object-fit:cover}
+.about-credentials{display:flex;flex-direction:column;gap:14px}
+.credential-item{padding:14px 0;border-bottom:1px solid var(--mist)}
+.credential-label{font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--sienna);margin-bottom:5px}
+.credential-value{font-family:var(--font-zh);font-size:12px;color:var(--smoke);line-height:1.7}
+.about-bio-zh{font-family:var(--font-zh);font-size:16px;line-height:2.2;color:var(--ink);margin-bottom:56px;font-weight:300}
+.lang-divider{display:flex;align-items:center;gap:16px;margin-bottom:40px}
+.lang-divider span{font-family:var(--font-mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--sienna);white-space:nowrap}
+.lang-divider::after{content:'';flex:1;height:1px;background:var(--mist)}
+
+/* STATEMENT */
+.statement-section{background:var(--ink);padding:120px 60px;position:relative;overflow:hidden}
+.statement-section::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(155,107,58,.12) 0%,transparent 70%);pointer-events:none}
+.statement-label{font-family:var(--font-mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--sienna);margin-bottom:48px}
+.statement-text-zh{font-family:var(--font-zh);font-size:clamp(22px,3vw,36px);font-weight:300;line-height:2;color:var(--paper);max-width:900px;margin-bottom:60px}
+.statement-text-en{font-family:var(--font-en);font-size:clamp(20px,2.5vw,30px);font-style:italic;font-weight:300;line-height:1.8;color:rgba(247,244,239,.55);max-width:860px;border-left:1px solid var(--sienna);padding-left:32px}
+
+/* WORKS */
+.works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px}
+.work-card{position:relative;aspect-ratio:4/5;background:var(--mist);overflow:hidden}
+.work-card.featured{grid-column:span 2;aspect-ratio:16/9}
+.work-card-img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease,filter .8s ease}
+.work-card:hover .work-card-img{transform:scale(1.04);filter:saturate(.7)}
+.work-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,12,10,.85) 0%,transparent 55%);opacity:0;transition:opacity .5s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:32px}
+.work-card:hover .work-card-overlay{opacity:1}
+.work-card-title{font-family:var(--font-en);font-size:22px;font-weight:400;color:var(--paper);margin-bottom:6px;transform:translateY(8px);transition:transform .4s ease}
+.work-card:hover .work-card-title{transform:translateY(0)}
+.work-card-meta{font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--sienna-light);transform:translateY(8px);transition:transform .4s ease .05s}
+.work-card:hover .work-card-meta{transform:translateY(0)}
+.work-card-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.work-card-placeholder svg{width:40px;height:40px;stroke:#C0BBB3;fill:none;stroke-width:1}
+.work-card-placeholder-text{font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#C0BBB3;text-align:center}
+
+/* EXHIBITIONS */
+.exhibition-list{display:flex;flex-direction:column}
+.exhibition-item{display:grid;grid-template-columns:120px 1fr auto;gap:48px;align-items:baseline;padding:36px 0;border-top:1px solid var(--mist);position:relative;cursor:default}
+.exhibition-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--mist)}
+.exhibition-item:hover{padding-left:12px;transition:padding .4s ease}
+.exhibition-item:hover .exhibition-title{color:var(--sienna)}
+.exhibition-year{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--sienna)}
+.exhibition-title{font-family:var(--font-zh);font-size:16px;font-weight:400;color:var(--ink);margin-bottom:6px;line-height:1.5;transition:color .3s}
+.exhibition-title-en{font-family:var(--font-en);font-size:14px;font-style:italic;color:var(--smoke);margin-bottom:8px}
+.exhibition-work{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:#9B9490}
+.exhibition-venue{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--smoke);text-align:right;white-space:nowrap}
+
+/* BRANDS */
+.brand-section{background:var(--cream);padding:120px 60px}
+.brand-intro{max-width:640px;margin-bottom:72px}
+.brand-intro p{font-family:var(--font-zh);font-size:15px;line-height:2.2;color:var(--smoke);font-weight:300}
+.brand-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.brand-card{background:var(--paper);padding:48px;position:relative;overflow:hidden;transition:transform .4s ease;cursor:default}
+.brand-card:hover{transform:translateY(-4px)}
+.brand-card::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:var(--sienna);transition:height .4s ease}
+.brand-card:hover::before{height:100%}
+.brand-card-label{font-family:var(--font-mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--sienna);margin-bottom:20px}
+.brand-card-name-zh{font-family:var(--font-zh);font-size:28px;font-weight:400;color:var(--ink);margin-bottom:4px}
+.brand-card-name-en{font-family:var(--font-en);font-size:18px;font-style:italic;color:var(--smoke);margin-bottom:24px}
+.brand-card-desc{font-family:var(--font-zh);font-size:13px;line-height:2;color:var(--smoke);font-weight:300}
+
+/* CONTACT */
+.contact-section{padding:120px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid var(--mist)}
+.contact-heading-zh{font-family:var(--font-zh);font-size:clamp(42px,5vw,72px);font-weight:300;line-height:1.1;letter-spacing:.06em;color:var(--ink);margin-bottom:8px}
+.contact-heading-en{font-family:var(--font-en);font-size:clamp(32px,4vw,54px);font-style:italic;font-weight:300;color:var(--smoke);margin-bottom:52px}
+.contact-note{font-family:var(--font-zh);font-size:14px;line-height:2;color:var(--smoke);font-weight:300;max-width:380px}
+.contact-right{display:flex;flex-direction:column;gap:32px}
+.contact-link-label{font-family:var(--font-mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--sienna);margin-bottom:8px}
+.contact-link{font-family:var(--font-en);font-size:22px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--mist);padding-bottom:4px;transition:border-color .3s,color .3s;display:inline-block}
+.contact-link:hover{border-color:var(--sienna);color:var(--sienna)}
+
+/* FOOTER */
+.footer-portfolio{background:var(--ink);padding:48px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-left{font-family:var(--font-zh);font-size:13px;color:rgba(247,244,239,.4);letter-spacing:.1em}
+.footer-right{font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,239,.3)}
+
+@media(max-width:900px){
+  .nav-portfolio{padding:24px 28px}
+  .nav-links{display:none}
+  .hero-section{grid-template-columns:1fr}
+  .hero-left{padding:120px 28px 60px}
+  .hero-right{height:380px}
+  .section-portfolio{padding:80px 28px}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .about-left{position:static}
+  .works-grid{grid-template-columns:1fr 1fr}
+  .work-card.featured{grid-column:span 2}
+  .exhibition-item{grid-template-columns:80px 1fr}
+  .exhibition-venue{display:none}
+  .brand-grid{grid-template-columns:1fr}
+  .contact-section{grid-template-columns:1fr;gap:48px}
+  .statement-section{padding:80px 28px}
+  .brand-section{padding:80px 28px}
+  .footer-portfolio{padding:40px 28px;flex-direction:column;gap:16px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-portfolio">
+  <a href="#" class="nav-logo">田梦 &nbsp;/&nbsp; Tian Meng</a>
+  <ul class="nav-links">
+    <li><a href="#about">关于 About</a></li>
+    <li><a href="#works">作品 Works</a></li>
+    <li><a href="#fuzhanglu">复章录</a></li>
+    <li><a href="#exhibitions">展览 Exhibitions</a></li>
+    <li><a href="#brand">品牌 Brands</a></li>
+    <li><a href="#contact">联系 Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero-section">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Oil Painter &amp; Visual Artist — Beijing</p>
+    <h1 class="hero-name-zh">田梦</h1>
+    <h2 class="hero-name-en">Tian Meng</h2>
+    <div class="hero-discipline">
+      <span>油画 Oil Painting</span>
+      <span>数字绘画 Digital Painting</span>
+      <span>装置艺术 Installation</span>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><label>机构 Institution</label><p>中国国家画院<br />访问学者</p></div>
+      <div class="hero-meta-item"><label>学历 Education</label><p>中国人民大学<br />艺术学院 硕士</p></div>
+      <div class="hero-meta-item"><label>现居 Based in</label><p>北京<br />Beijing</p></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="uploads/e295e704-cf35-430d-8f19-6bf965f98b4b.JPG" alt="Tian Meng" />
+    <span style="position:absolute;bottom:40px;right:40px;font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#A09890;writing-mode:vertical-rl">Portrait · 2024</span>
+  </div>
+</section>
+
+<section class="section-portfolio" id="about">
+  <div class="section-header reveal"><span class="section-number">01</span><div><span class="section-title-zh">关于艺术家</span><span class="section-title-en">About the Artist</span></div></div>
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <div class="about-portrait"><img src="uploads/e295e704-cf35-430d-8f19-6bf965f98b4b.JPG" alt="Tian Meng" /></div>
+      <div class="about-credentials">
+        <div class="credential-item"><p class="credential-label">学术身份 Academic</p><p class="credential-value">中国国家画院 访问学者</p></div>
+        <div class="credential-item"><p class="credential-label">教育背景 Education</p><p class="credential-value">中国人民大学艺术学院<br />油画系 硕士</p></div>
+        <div class="credential-item"><p class="credential-label">创作媒介 Medium</p><p class="credential-value">油画 · 数字绘画 · 装置</p></div>
+        <div class="credential-item"><p class="credential-label">创作取向 Approach</p><p class="credential-value">当代表现主义</p></div>
+        <div class="credential-item"><p class="credential-label">所在地 Location</p><p class="credential-value">北京，中国</p></div>
+      </div>
+    </div>
+    <div class="about-right">
+      <p class="about-bio-zh reveal">田梦的视觉创作实践跨越多个维度，呈现<em style="font-style:normal;color:var(--sienna);font-weight:400">当代表现主义</em>特质。自2023年起，她摒弃叙事框架，将<em style="font-style:normal;color:var(--sienna);font-weight:400">身体感知、生命体验与记忆</em>融合，试图从具象再现中逃逸，用原始绘画的纯粹力量重构画面。其创作聚焦于<em style="font-style:normal;color:var(--sienna);font-weight:400">感知的不可靠性</em>与自我意识的流动性，通过视觉与意识的共同作用，阐述对"存在"本质的理解。</p>
+      <div class="lang-divider reveal"><span>English</span></div>
+      <p class="reveal" style="font-family:var(--font-en);font-size:19px;line-height:1.9;color:var(--smoke);font-weight:300;font-style:italic">Tian Meng's practice interrogates <em style="font-style:normal;color:var(--sienna)">perception, memory, and embodied experience</em> across multiple mediums, employing contemporary expressionist strategies. Since 2023, she has abandoned narrative frameworks to pursue works that transcend representational specificity, channeling the <em style="font-style:normal;color:var(--sienna)">primal power of painting</em> to deconstruct and reconstruct the image plane.</p>
+    </div>
+  </div>
+</section>
+
+<div class="statement-section" id="statement">
+  <p class="statement-label reveal">Practice Statement</p>
+  <p class="statement-text-zh reveal">从具象再现中逃逸——用原始绘画的纯粹力量，重构画面。</p>
+  <p class="statement-text-en reveal">"Since 2023, she has abandoned narrative frameworks to pursue works that transcend representational specificity, channeling the primal power of painting to deconstruct and reconstruct the image plane."</p>
+</div>
+
+<section class="section-portfolio" id="works">
+  <div class="section-header reveal"><span class="section-number">02</span><div><span class="section-title-zh">作品选</span><span class="section-title-en">Selected Works</span></div></div>
+  <div class="works-grid">
+    <div class="work-card featured reveal">
+      <img class="work-card-img" src="uploads/1583c74e-4299-46ac-8756-8320a3f344d0.JPG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">未分类</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/1ce1c169-4843-4220-96c8-23284a412eff.JPG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">未分类</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/77f2b361-6221-49b0-b616-d6ced70dd195.JPG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">未分类</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/907b984f-da38-46bd-9b2f-a789905fb682.JPG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">未分类</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/2b90a5ec-f4a5-4fea-b070-45221048134c.JPEG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">未分类</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/ff07a4ea-a6fd-48af-a697-d72aae949b24.JPEG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">未分类</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/3ce135a4-9608-446d-b731-5fab8ae47942.JPEG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">未分类</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/a7c20c76-8930-43e5-abc1-a716b5c2eb04.JPEG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">装置艺术 · 装置艺术</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/6597fdc8-8e01-46b1-8298-9be35a3a2605.JPEG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">装置艺术 · 装置艺术</p>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <img class="work-card-img" src="uploads/8845973b-ceda-429a-8337-94d6b6b650c8.JPEG" alt="作品" />
+      <div class="work-card-overlay">
+        <p class="work-card-title">作品</p>
+        <p class="work-card-meta">装置艺术 · 装置艺术</p>
+      </div>
+    </div></div>
+</section>
+
+
+<section class="section-portfolio" id="fuzhanglu" style="padding-top:0">
+  <div class="section-header reveal">
+    <span class="section-number">03</span>
+    <div>
+      <span class="section-title-zh">复章录 · 装置系列</span>
+      <span class="section-title-en">Fu Zhang Lu · Installation Series</span>
+    </div>
+    <a href="series/复章录.html" style="font-family:var(--font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--sienna);text-decoration:none;margin-left:auto;white-space:nowrap">查看完整系列 →</a>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:40px">
+    
+    <div class="reveal" style="position:relative">
+      <img src="uploads/d8a9004d-90c2-4148-a067-6a5e58f67832.JPEG" alt="复章录" style="width:100%;height:auto;max-height:85vh;object-fit:contain;display:block;background:var(--mist)" />
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--mist)">
+        <div>
+          <p style="font-family:var(--font-zh);font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px">复章录</p>
+          <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--smoke)">装置艺术 · 装置艺术</p>
+        </div>
+      </div>
+      
+    </div>
+    <div class="reveal" style="position:relative">
+      <img src="uploads/648cdfa6-eb64-441c-8d7c-4329c89da59c.JPEG" alt="复章录" style="width:100%;height:auto;max-height:85vh;object-fit:contain;display:block;background:var(--mist)" />
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--mist)">
+        <div>
+          <p style="font-family:var(--font-zh);font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px">复章录</p>
+          <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--smoke)">装置艺术 · 装置艺术</p>
+        </div>
+      </div>
+      
+    </div>
+    <div class="reveal" style="position:relative">
+      <img src="uploads/e3330026-1c58-4bf4-b4db-1e23a77241b0.JPEG" alt="复章录" style="width:100%;height:auto;max-height:85vh;object-fit:contain;display:block;background:var(--mist)" />
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--mist)">
+        <div>
+          <p style="font-family:var(--font-zh);font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px">复章录</p>
+          <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--smoke)">装置艺术 · 装置艺术</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section class="section-portfolio" id="exhibitions" style="padding-top:0">
+  <div class="section-header reveal"><span class="section-number">04</span><div><span class="section-title-zh">展览记录</span><span class="section-title-en">Exhibitions</span></div></div>
+  <div class="exhibition-list">
+    <div class="exhibition-item reveal"><span class="exhibition-year">2024</span><div class="exhibition-info"><p class="exhibition-title">第十届中国北京国际美术双年展</p><p class="exhibition-title-en">10th China Beijing International Art Biennale</p><p class="exhibition-work">综合材料作品《复章录》入选 / Mixed media work "Fu Zhang Lu" selected</p></div><span class="exhibition-venue">Beijing, China</span></div>
+    <div class="exhibition-item reveal"><span class="exhibition-year">2024</span><div class="exhibition-info"><p class="exhibition-title">共振：当代艺术展</p><p class="exhibition-title-en">Resonance: Contemporary Art Exhibition</p><p class="exhibition-work">作品入选 / Work selected</p></div><span class="exhibition-venue">Palais de Beaulieu, Lausanne</span></div>
+  </div>
+</section>
+
+<div class="brand-section" id="brand">
+  <div class="section-header reveal"><span class="section-number">05</span><div><span class="section-title-zh">品牌实践</span><span class="section-title-en">Brand Practice</span></div></div>
+  <div class="brand-intro reveal"><p>田梦将艺术思维延伸至生活美学领域，创立两个独立品牌——将绘画的感知哲学融入日常物件与茶文化的设计语言之中。</p></div>
+  <div class="brand-grid">
+    <div class="brand-card reveal"><p class="brand-card-label">Brand 01 · Lifestyle</p><p class="brand-card-name-zh">宠物家具品牌</p><p class="brand-card-name-en">Pet Furniture Brand</p><p class="brand-card-desc">将艺术思维与生活美学融入宠物家具的设计语言，重新定义人与动物共处的生活空间。</p></div>
+    <div class="brand-card reveal"><p class="brand-card-label">Brand 02 · Tea Culture</p><p class="brand-card-name-zh">野颂集</p><p class="brand-card-name-en">Yexong Collection</p><p class="brand-card-desc">云南景迈山茶叶品牌。以艺术家的感知方式重新诠释山野茶文化，连接自然与审美意识。</p></div>
+  </div>
+</div>
+
+<section class="contact-section" id="contact">
+  <div class="contact-left"><h2 class="contact-heading-zh reveal">合作与联系</h2><h3 class="contact-heading-en reveal">Get in Touch</h3><p class="contact-note reveal">欢迎展览合作、品牌委托及媒体采访等相关咨询。<br /><br />Open to exhibition collaborations, brand commissions, and media enquiries.</p></div>
+  <div class="contact-right">
+    <div class="contact-link-block reveal"><p class="contact-link-label">Email</p><a href="mailto:18239579975@163.com" class="contact-link">18239579975@163.com</a></div>
+    <div class="contact-link-block reveal"><p class="contact-link-label">Location</p><span class="contact-link" style="cursor:default">北京 Beijing, China</span></div>
+    <div class="contact-link-block reveal"><p class="contact-link-label">Social</p><a href="https://instagram.com/Auderytiaan" target="_blank" rel="noopener noreferrer" class="contact-link">@Auderytiaan</a></div>
+  </div>
+</section>
+
+<footer class="footer-portfolio">
+  <p class="footer-left">田梦 Tian Meng · 北京</p>
+  <p class="footer-right">Oil Painter &amp; Visual Artist · 2024</p>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
