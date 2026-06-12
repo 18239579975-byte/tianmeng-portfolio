@@ -425,6 +425,19 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.12 });
 reveals.forEach(r => observer.observe(r));
+
+// WeChat auto-redirect
+(function(){
+  var ua = navigator.userAgent.toLowerCase();
+  if(ua.indexOf('micromessenger') !== -1){
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,12,10,.92);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#F7F4EF;font-family:"Noto Serif SC",serif;text-align:center;padding:40px';
+    overlay.innerHTML = '<p style="font-size:48px;margin-bottom:24px">↗</p><p style="font-size:18px;margin-bottom:12px;font-weight:300">点击右上角</p><p style="font-size:18px;margin-bottom:32px;font-weight:300">选择「在浏览器中打开」</p><p style="font-size:13px;color:#9B6B3A">以获得最佳观看体验</p>';
+    document.body.appendChild(overlay);
+  }
+})();
+</script>
+(function(){var ua=navigator.userAgent.toLowerCase();if(ua.indexOf('micromessenger')!==-1){var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;background:rgba(13,12,10,.92);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#F7F4EF;font-family:"Noto Serif SC",serif;text-align:center;padding:40px';o.innerHTML='<p style="font-size:48px;margin-bottom:24px">↗</p><p style="font-size:18px;margin-bottom:12px;font-weight:300">点击右上角</p><p style="font-size:18px;margin-bottom:32px;font-weight:300">选择「在浏览器中打开」</p><p style="font-size:13px;color:#9B6B3A">以获得最佳观看体验</p>';document.body.appendChild(o);}})();
 </script>
 </body>
 </html>
