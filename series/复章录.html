@@ -110,7 +110,6 @@ const reveals=document.querySelectorAll('.reveal');
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.12});
 reveals.forEach(r=>observer.observe(r));
 </script>
-(function(){var ua=navigator.userAgent.toLowerCase();if(ua.indexOf('micromessenger')!==-1){document.documentElement.style.display='none';document.addEventListener('DOMContentLoaded',function(){document.documentElement.style.display='block';document.body.innerHTML='<div style="position:fixed;inset:0;background:#0D0C0A;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#F7F4EF;font-family:'Noto Serif SC',serif;text-align:center;padding:40px"><p style="font-size:12px;letter-spacing:.2em;color:#9B6B3A;margin-bottom:40px">TIAN MENG · PORTFOLIO</p><p style="font-size:15px;margin-bottom:8px;font-weight:300;line-height:2">微信内置浏览器无法加载高清作品图片</p><p style="font-size:15px;margin-bottom:40px;font-weight:300;line-height:2">请点击右上角 ··· 菜单</p><p style="font-size:48px;margin-bottom:24px">↗</p><p style="font-size:20px;margin-bottom:12px;font-weight:400">选择「在浏览器中打开」</p><p style="font-size:13px;color:#9B6B3A;margin-top:48px">以获得完整作品集观看体验</p></div>';});}})();
 </script>
 </body>
 </html>
