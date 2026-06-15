@@ -425,7 +425,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--font-zh);overflo
       
     </div>
     <div class="reveal" style="position:relative">
-      <video src="uploads/87917e01-29d5-46c0-bd8a-8dbf9d5aad2e.MP4"  controls muted loop playsinline preload="metadata" style="width:100%;height:auto;max-height:85vh;object-fit:contain;display:block;background:transparent"></video>
+      <video src="uploads/87917e01-29d5-46c0-bd8a-8dbf9d5aad2e.MP4"  controls loop playsinline preload="metadata" style="width:100%;height:auto;max-height:85vh;object-fit:contain;display:block;background:transparent"></video>
       <div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--mist)">
         <div>
           <p style="font-family:var(--font-zh);font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px">强制对位 - 缝隙的尺度</p>
@@ -435,7 +435,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--font-zh);overflo
       
     </div>
     <div class="reveal" style="position:relative">
-      <video src="uploads/74aaf8dd-e24f-485f-8d95-5747f4e94e4f.MP4"  controls muted loop playsinline preload="metadata" style="width:100%;height:auto;max-height:85vh;object-fit:contain;display:block;background:transparent"></video>
+      <video src="uploads/74aaf8dd-e24f-485f-8d95-5747f4e94e4f.MP4"  controls loop playsinline preload="metadata" style="width:100%;height:auto;max-height:85vh;object-fit:contain;display:block;background:transparent"></video>
       <div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--mist)">
         <div>
           <p style="font-family:var(--font-zh);font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px">强制对位 - 垂直的内应力</p>
@@ -486,72 +486,30 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 reveals.forEach(r => observer.observe(r));
 
-// Video autoplay with sound on scroll
+// Video autoplay: scroll to play, first touch/scroll unlocks sound
+let pageActive = false;
+function activate() {
+  if (pageActive) return;
+  pageActive = true;
+  document.querySelectorAll('video').forEach(v => { v.muted = false; });
+  window.removeEventListener('scroll', activate);
+  window.removeEventListener('touchstart', activate);
+}
+window.addEventListener('scroll', activate, {once: true});
+window.addEventListener('touchstart', activate, {once: true});
+
 const videoObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     const v = e.target;
     if (e.isIntersecting) {
-      v.muted = true;
-      v.play().then(() => {
-        // After muted autoplay succeeds, unmute for sound
-        setTimeout(() => { v.muted = false; }, 300);
-      }).catch(() => {});
+      if (pageActive) v.muted = false;
+      v.play().catch(() => {});
     } else {
       v.pause();
-      v.muted = true;
     }
   });
 }, { threshold: 0.5 });
-
 document.querySelectorAll('video').forEach(v => videoObserver.observe(v));
 </script>
-<script>
-// Video autoplay with sound — activated by first user scroll
-var pageActivated = false;
-var pendingVideos = [];
-
-function tryPlayVideo(v) {
-  if (pageActivated) {
-    v.muted = false;
-    v.play().catch(function(){});
-  } else {
-    pendingVideos.push(v);
-    v.muted = true;
-    v.play().catch(function(){});
-  }
-}
-
-// First user interaction unlocks sound for all videos
-function activatePage() {
-  if (pageActivated) return;
-  pageActivated = true;
-  pendingVideos.forEach(function(v) {
-    v.muted = false;
-  });
-  pendingVideos = [];
-  window.removeEventListener('scroll', activatePage);
-  window.removeEventListener('touchstart', activatePage);
-  window.removeEventListener('click', activatePage);
-}
-
-window.addEventListener('scroll', activatePage, {once: true});
-window.addEventListener('touchstart', activatePage, {once: true});
-window.addEventListener('click', activatePage, {once: true});
-
-// Scroll into view → play, scroll out → pause
-var vo = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    var v = e.target;
-    if (e.isIntersecting) {
-      tryPlayVideo(v);
-    } else {
-      v.pause();
-    }
-  });
-}, {threshold: 0.5});
-
-document.querySelectorAll('video').forEach(function(v) { vo.observe(v); });
-</script>
-
 </body>
 </html>
