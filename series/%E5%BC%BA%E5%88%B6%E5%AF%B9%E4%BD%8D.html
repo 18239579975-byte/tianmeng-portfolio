@@ -131,10 +131,53 @@ const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isInt
 reveals.forEach(r=>observer.observe(r));
 </script>
 </script>
-
 <script>
-var vo=new IntersectionObserver(function(e){e.forEach(function(x){var v=x.target;if(x.isIntersecting){v.muted=true;v.play().then(function(){setTimeout(function(){v.muted=false},300)}).catch(function(){})}else{v.pause();v.muted=true}})});
-document.querySelectorAll('video').forEach(function(v){vo.observe(v)});
+// Video autoplay with sound — activated by first user scroll
+var pageActivated = false;
+var pendingVideos = [];
+
+function tryPlayVideo(v) {
+  if (pageActivated) {
+    v.muted = false;
+    v.play().catch(function(){});
+  } else {
+    pendingVideos.push(v);
+    v.muted = true;
+    v.play().catch(function(){});
+  }
+}
+
+// First user interaction unlocks sound for all videos
+function activatePage() {
+  if (pageActivated) return;
+  pageActivated = true;
+  pendingVideos.forEach(function(v) {
+    v.muted = false;
+  });
+  pendingVideos = [];
+  window.removeEventListener('scroll', activatePage);
+  window.removeEventListener('touchstart', activatePage);
+  window.removeEventListener('click', activatePage);
+}
+
+window.addEventListener('scroll', activatePage, {once: true});
+window.addEventListener('touchstart', activatePage, {once: true});
+window.addEventListener('click', activatePage, {once: true});
+
+// Scroll into view → play, scroll out → pause
+var vo = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    var v = e.target;
+    if (e.isIntersecting) {
+      tryPlayVideo(v);
+    } else {
+      v.pause();
+    }
+  });
+}, {threshold: 0.5});
+
+document.querySelectorAll('video').forEach(function(v) { vo.observe(v); });
 </script>
+
 </body>
 </html>
