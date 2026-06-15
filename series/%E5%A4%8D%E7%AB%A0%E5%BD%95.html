@@ -111,5 +111,10 @@ const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isInt
 reveals.forEach(r=>observer.observe(r));
 </script>
 </script>
+
+<script>
+var vo=new IntersectionObserver(function(e){e.forEach(function(x){var v=x.target;if(x.isIntersecting){v.muted=true;v.play().then(function(){setTimeout(function(){v.muted=false},300)}).catch(function(){})}else{v.pause();v.muted=true}})});
+document.querySelectorAll('video').forEach(function(v){vo.observe(v)});
+</script>
 </body>
 </html>

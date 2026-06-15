@@ -485,7 +485,25 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.12 });
 reveals.forEach(r => observer.observe(r));
-</script>
+
+// Video autoplay with sound on scroll
+const videoObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) {
+      v.muted = true;
+      v.play().then(() => {
+        // After muted autoplay succeeds, unmute for sound
+        setTimeout(() => { v.muted = false; }, 300);
+      }).catch(() => {});
+    } else {
+      v.pause();
+      v.muted = true;
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('video').forEach(v => videoObserver.observe(v));
 </script>
 </body>
 </html>
