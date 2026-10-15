@@ -31,7 +31,7 @@ body{background:#0D0C0A;min-height:100vh;color:var(--paper);font-family:var(--fo
   <p class="reveal" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--sienna);margin-bottom:32px">Installation Series</p>
   <h1 class="reveal" style="font-family:var(--font-zh);font-size:clamp(56px,7vw,96px);font-weight:300;letter-spacing:.08em;color:var(--paper);line-height:1.1;margin-bottom:16px">复章录</h1>
   <h2 class="reveal" style="font-family:var(--font-en);font-size:clamp(28px,3.5vw,48px);font-weight:300;font-style:italic;color:var(--smoke);letter-spacing:.04em;margin-bottom:48px">Palimpsest</h2>
-  <p class="reveal" style="font-family:var(--font-zh);font-size:15px;line-height:2.2;color:rgba(247,244,239,.55);max-width:520px;font-weight:300">综合材料装置作品系列。以废弃记录框架为材料基底，将身体感知、生命体验与记忆共同熔铸为空间中的视觉叙事。</p>
+  <p class="reveal" style="font-family:var(--font-zh);font-size:15px;line-height:2.2;color:rgba(247,244,239,.55);max-width:560px;font-weight:300;margin-bottom:24px">综合材料装置作品系列。以废弃记录框架为材料基底，将身体感知、生命体验与记忆共同熔铸为空间中的视觉叙事。</p>
   <div style="margin-top:80px;opacity:0;animation:fadeUp .8s ease forwards 1.2s">
     <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="var(--sienna)" strokeWidth="1" opacity="0.5"><rect x="1" y="1" width="22" height="38" rx="11"/><circle cx="12" cy="14" r="3" fill="var(--sienna)"/></svg>
   </div>
@@ -111,14 +111,5 @@ const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isInt
 reveals.forEach(r=>observer.observe(r));
 </script>
 </script>
-<script>
-var pa=false;
-function act(){if(pa)return;pa=true;document.querySelectorAll('video').forEach(function(v){v.muted=false});window.removeEventListener('scroll',act);window.removeEventListener('touchstart',act)}
-window.addEventListener('scroll',act,{once:true});
-window.addEventListener('touchstart',act,{once:true});
-var vo=new IntersectionObserver(function(e){e.forEach(function(x){var v=x.target;if(x.isIntersecting){if(pa)v.muted=false;v.play().catch(function(){})}else{v.pause()}})},{threshold:.5});
-document.querySelectorAll('video').forEach(function(v){vo.observe(v)});
-</script>
-
 </body>
 </html>
